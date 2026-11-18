@@ -1,0 +1,5 @@
+{{define "content"}}
+<h1><code>{{.CommitSHA}}</code></h1>
+<pre>{{.CommitMeta}}</pre>
+{{if .Diff}}<pre>{{.Diff}}</pre>{{else}}<p class="muted">Pas de diff (commit de merge ou vide).</p>{{end}}
+{{end}}

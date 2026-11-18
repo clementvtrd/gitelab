@@ -1,0 +1,5 @@
+{{define "content"}}
+<h1><a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}">{{.Repo.FullName}}</a> <span class="muted">{{.Ref}}:/{{.Path}}</span></h1>
+{{if .BlobBinary}}<p class="muted">Fichier binaire ou trop volumineux ({{.BlobSize}} octets) — clone le dépôt pour le consulter.</p>
+{{else}}<pre>{{.BlobText}}</pre>{{end}}
+{{end}}

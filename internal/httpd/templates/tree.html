@@ -1,0 +1,16 @@
+{{define "content"}}
+<h1><a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}">{{.Repo.FullName}}</a> <span class="muted">{{.Ref}}</span></h1>
+<p class="muted">
+<a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}/branches">branches</a> ·
+<a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}/commits/{{.Ref}}">commits</a>
+{{if .Path}} · chemin : <code>/{{.Path}}</code>{{end}}
+</p>
+<ul class="tree">
+{{if .Path}}<li><a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}/tree/{{.Ref}}/{{.Parent}}">..</a></li>{{end}}
+{{range .Entries}}
+<li>
+{{if .IsDir}}<a href="/r/{{$.Repo.Owner}}/{{$.Repo.Name}}/tree/{{$.Ref}}/{{$.Path}}{{if $.Path}}/{{end}}{{.Name}}">{{.Name}}/</a>{{else}}<a href="/r/{{$.Repo.Owner}}/{{$.Repo.Name}}/blob/{{$.Ref}}/{{$.Path}}{{if $.Path}}/{{end}}{{.Name}}">{{.Name}}</a> <span class="muted">{{.Size}} o</span>{{end}}
+</li>
+{{end}}
+</ul>
+{{end}}

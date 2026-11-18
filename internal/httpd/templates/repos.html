@@ -1,0 +1,29 @@
+{{define "content"}}
+<h1>Dépôts</h1>
+<div class="card">
+<h2>Nouveau dépôt</h2>
+<form method="post" action="/repos">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<p>
+<input name="name" placeholder="nom-du-depot" required>
+<input name="description" placeholder="description">
+<label><input type="checkbox" name="private" value="1"> privé</label>
+<button type="submit">Créer</button>
+</p>
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+</form>
+</div>
+{{if .Repos}}
+<table>
+<tr><th>Dépôt</th><th>Visibilité</th><th>Clone HTTP</th><th>Créé</th></tr>
+{{range .Repos}}
+<tr>
+<td><a href="/r/{{.Owner}}/{{.Name}}">{{.FullName}}</a>{{if .Description}} <span class="muted">{{.Description}}</span>{{end}}</td>
+<td>{{if .Private}}<span class="badge">privé</span>{{else}}<span class="badge">public</span>{{end}}</td>
+<td><code>{{$.ExternalURL}}/{{.GitPath}}</code></td>
+<td class="muted">{{.CreatedAt.Format "2006-01-02"}}</td>
+</tr>
+{{end}}
+</table>
+{{else}}<p class="muted">Aucun dépôt pour le moment.</p>{{end}}
+{{end}}

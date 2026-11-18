@@ -1,0 +1,10 @@
+{{define "content"}}
+<h1>Branches — <a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}">{{.Repo.FullName}}</a></h1>
+{{if .Branches}}
+<ul>
+{{range .Branches}}
+<li><a href="/r/{{$.Repo.Owner}}/{{$.Repo.Name}}/tree/{{.Name}}">{{.Name}}</a> <code class="muted">{{.Short}}</code></li>
+{{end}}
+</ul>
+{{else}}<p class="muted">Aucune branche.</p>{{end}}
+{{end}}

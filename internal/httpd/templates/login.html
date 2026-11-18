@@ -1,0 +1,10 @@
+{{define "content"}}
+<h1>Connexion</h1>
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+<form method="post" action="/login" class="card" style="max-width:360px">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<p><label>Utilisateur<br><input name="username" required autofocus></label></p>
+<p><label>Mot de passe<br><input type="password" name="password" required></label></p>
+<button type="submit">Se connecter</button>
+</form>
+{{end}}

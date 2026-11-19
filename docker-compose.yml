@@ -1,0 +1,22 @@
+services:
+  gitelab:
+    build: .
+    # image: ghcr.io/clementvtrd/gitelab:latest
+    container_name: gitelab
+    ports:
+      - "3000:3000"   # HTTP (UI web + git smart HTTP)
+      - "2222:2222"   # SSH (git over SSH)
+    environment:
+      GITELAB_DATA_DIR: /data
+      GITELAB_HTTP_ADDR: :3000
+      GITELAB_SSH_ADDR: :2222
+      GITELAB_EXTERNAL_URL: http://localhost:3000
+      # Bootstrap du premier admin (laissé vide = aucun admin créé au démarrage) :
+      GITELAB_ADMIN_USER: admin
+      GITELAB_ADMIN_PASSWORD: changeme-a-lancer
+    volumes:
+      - gitelab-data:/data
+    restart: unless-stopped
+
+volumes:
+  gitelab-data:

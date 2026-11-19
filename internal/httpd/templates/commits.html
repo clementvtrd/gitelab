@@ -1,0 +1,14 @@
+{{define "content"}}
+<h1>Commits — <a href="/r/{{.Repo.Owner}}/{{.Repo.Name}}">{{.Repo.FullName}}</a> <span class="muted">{{.Ref}}</span></h1>
+{{if .Commits}}
+<table>
+{{range .Commits}}
+<tr>
+<td><a href="/r/{{$.Repo.Owner}}/{{$.Repo.Name}}/commit/{{.SHA}}"><code>{{.Short}}</code></a></td>
+<td>{{.Subject}}</td>
+<td class="muted">{{.Author}}</td>
+</tr>
+{{end}}
+</table>
+{{else}}<p class="muted">Aucun commit sur cette branche.</p>{{end}}
+{{end}}

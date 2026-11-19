@@ -1,0 +1,44 @@
+{{define "content"}}
+<h1>Paramètres de @{{.User.Username}}</h1>
+<div class="card">
+<h2>Jetons d'accès (git over HTTPS)</h2>
+{{if .NewToken}}
+<p>Nouveau jeton — copie-le maintenant, il ne sera plus affiché :</p>
+<p><code>{{.NewToken}}</code></p>
+{{end}}
+<form method="post" action="/settings/tokens">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<input name="name" placeholder="nom (ex: laptop)" required>
+<button type="submit">Créer un jeton</button>
+</form>
+<table>
+{{range .Tokens}}
+<tr>
+<td>{{.Name}}</td>
+<td class="muted">créé le {{.CreatedAt.Format "2006-01-02"}}{{if .LastUsedAt}} · dernière utilisation {{.LastUsedAt.Format "2006-01-02 15:04"}}{{end}}</td>
+<td><form class="inline" method="post" action="/settings/tokens/{{.ID}}/delete"><input type="hidden" name="csrf" value="{{$.CSRF}}"><button type="submit">Supprimer</button></form></td>
+</tr>
+{{else}}<tr><td class="muted">Aucun jeton.</td></tr>{{end}}
+</table>
+</div>
+<div class="card">
+<h2>Clés SSH (git over SSH)</h2>
+<form method="post" action="/settings/ssh-keys">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<p><input name="name" placeholder="nom (ex: laptop)" required></p>
+<p><textarea name="key" rows="3" cols="90" placeholder="ssh-ed25519 AAAA... commentaire" required></textarea></p>
+<button type="submit">Ajouter la clé</button>
+</form>
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+<table>
+{{range .Keys}}
+<tr>
+<td>{{.Name}}</td>
+<td><code>{{.KeyType}}</code></td>
+<td class="muted">{{.Fingerprint}}</td>
+<td><form class="inline" method="post" action="/settings/ssh-keys/{{.ID}}/delete"><input type="hidden" name="csrf" value="{{$.CSRF}}"><button type="submit">Supprimer</button></form></td>
+</tr>
+{{else}}<tr><td class="muted">Aucune clé.</td></tr>{{end}}
+</table>
+</div>
+{{end}}
